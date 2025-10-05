@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sanvi — Coding & Reading</title>
+  <meta name="description" content="Sanvi's personal portfolio" />
+  <style>
+    :root{
+      --bg:#0f1724; --accent:#7dd3fc; --muted:#94a3b8; --glass:rgba(255,255,255,0.04); --radius:14px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#071023);color:#e6eef8}
+    .container{max-width:1000px;margin:36px auto;padding:28px}
+    header{display:flex;gap:20px;align-items:center}
+    .avatar{width:110px;height:110px;border-radius:18px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:grid;place-items:center;color:#04263a;font-weight:700}
+    h1{margin:0;font-size:28px}
+    .lead{margin:6px 0 0;color:var(--muted)}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--radius);padding:18px;margin-top:22px;backdrop-filter:blur(6px)}
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:20px}
+    .chip{background:var(--glass);padding:8px 12px;border-radius:999px;color:var(--muted);font-weight:600}
+    .btn{background:linear-gradient(90deg,var(--accent),#60a5fa);color:#04263a;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+    input,textarea{width:100%;padding:10px;border-radius:8px;border:none;background:rgba(255,255,255,0.05);color:inherit;margin-top:8px}
+    .notes-list{margin-top:12px}
+    .note{background:rgba(255,255,255,0.04);padding:8px;border-radius:8px;margin-bottom:8px}
+    footer{margin-top:28px;text-align:center;color:var(--muted)}
+    @media (max-width:880px){.grid{grid-template-columns:1fr}.avatar{width:88px;height:88px}}
+    /* Popup overlay + glassy popup */
+    .overlay{position:fixed;inset:0;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);z-index:200}
+    .modal{width:360px;max-width:92%;background:rgba(12,18,28,0.88);border:1px solid rgba(125,211,252,0.18);backdrop-filter:blur(8px);padding:18px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.6);color:#e6eef8}
+    .modal h3{margin:0 0 10px;color:var(--accent)}
+    .modal .muted{color:var(--muted);font-weight:400;margin-bottom:8px}
+    .modal .actions{display:flex;gap:8px;margin-top:12px}
+    .btn-ghost{background:transparent;border:1px solid rgba(125,211,252,0.22);color:var(--accent);padding:8px 10px;border-radius:8px;cursor:pointer}
+    .status{margin-top:10px;font-size:0.95rem}
+    .glow { box-shadow:0 0 20px rgba(125,211,252,0.25); border:1px solid rgba(125,211,252,0.25); }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <div class="avatar">S</div>
+      <div>
+        <h1>Hi, I'm Sanvi</h1>
+        <p class="lead">I'm an intermediate web designer who loves coding and reading. I've completed HTML & CSS and made many small websites using Git — now learning JavaScript.</p>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <span class="chip">Hobby: Coding</span><span class="chip">Hobby: Reading</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="card grid">
+      <div>
+        <h2>Reading Notes & Quick JS Snippet</h2>
+        <p class="muted">Type a quick note or JS tip — click Add Note and the popup will let you send it (it will arrive in my email).</p>
+        <input id="noteInput" placeholder="One-line note about a book or code tip">
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="btn" onclick="openModalFor('note')">Add Note</button>
+        </div>
+
+        <pre style="background:rgba(255,255,255,0.03);padding:10px;border-radius:8px;margin-top:14px;color:var(--muted)"><code>// Example quick JS
+const book = "Harry Potter";
+console.log(`Currently reading ${book}`);</code></pre>
+
+        <h2 style="margin-top:18px">Community Reviews & Best Reads</h2>
+        <p class="muted">Share a review or favorite book — it will come to my email for review.</p>
+        <textarea id="reviewInput" rows="3" placeholder="Share your review or best reading recommendation..."></textarea>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="btn" onclick="openModalFor('review')">Post Review</button>
+        </div>
+
+        <h2 style="margin-top:18px">Contact</h2>
+        <p class="muted">Want to talk about coding or books? I'd love to connect</p>
+        <div style="display:flex;gap:8px">
+          <button class="btn" onclick="openModalFor('message')">Message Me</button>
+        </div>
+      </div>
+
+      <aside style="padding:6px">
+        <h3>Books I'm Reading</h3>
+        <ul style="list-style:none;padding:0;margin:0">
+          <li class="note"><strong>Agatha Christie Mysteries</strong><br><small class="muted">Intriguing detective stories.</small></li>
+          <li class="note"><strong>Harry Potter Series</strong><br><small class="muted">Magical adventures.</small></li>
+          <li class="note"><strong>Percy Jackson</strong><br><small class="muted">Modern myths & fun.</small></li>
+          <li class="note"><strong>Mahabharata & Ramayana</strong><br><small class="muted">Ancient Indian epics.</small></li>
+        </ul>
+      </aside>
+    </section>
+
+    <footer><small class="muted">Made with ❤️ by Sanvi — coding & reading.</small></footer>
+  </main>
+
+  <!-- Reusable Modal -->
+  <div class="overlay" id="overlay">
+    <div class="modal glow" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle">Send</h3>
+      <div class="muted" id="modalHint">Send a message</div>
+
+      <form id="modalForm">
+        <input name="name" id="modalName" placeholder="Your name" required>
+        <input name="_replyto" id="modalEmail" type="email" placeholder="Your email" required>
+        <textarea name="message" id="modalMessage" rows="4" placeholder="Your message..." required></textarea>
+
+        <div class="actions" style="margin-top:8px">
+          <button class="btn" id="modalSend" type="submit">Send</button>
+          <button type="button" class="btn-ghost" onclick="closeModal()" id="modalClose">Close</button>
+        </div>
+
+        <div class="status" id="modalStatus" aria-live="polite" style="display:none"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // CONFIG
+    const FORM_URL = "https://formspree.io/f/manpbeae";
+
+    // elements
+    const overlay = document.getElementById('overlay');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalHint = document.getElementById('modalHint');
+    const modalForm = document.getElementById('modalForm');
+    const modalName = document.getElementById('modalName');
+    const modalEmail = document.getElementById('modalEmail');
+    const modalMessage = document.getElementById('modalMessage');
+    const modalStatus = document.getElementById('modalStatus');
+    const modalSend = document.getElementById('modalSend');
+
+    // Open modal for a type: 'note', 'review', 'message'
+    function openModalFor(type) {
+      // Prefill message for note/review if user typed something
+      if (type === 'note') {
+        modalTitle.textContent = "🗒️ Send Note";
+        modalHint.textContent = "A quick reading or code note — I'll receive it by email.";
+        modalMessage.value = document.getElementById('noteInput').value || "";
+      } else if (type === 'review') {
+        modalTitle.textContent = "💬 Post Review / Tip";
+        modalHint.textContent = "Share a review or coding tip — I'll receive it by email.";
+        modalMessage.value = document.getElementById('reviewInput').value || "";
+      } else {
+        modalTitle.textContent = "💌 Message Me";
+        modalHint.textContent = "Send me a direct message.";
+        modalMessage.value = "";
+      }
+
+      // small UX: keep name/email blank, user enters them
+      modalName.value = "";
+      modalEmail.value = "";
+      modalStatus.style.display = 'none';
+      overlay.style.display = 'flex';
+      modalName.focus();
+      // store the category so submit knows what it is
+      modalForm.dataset.category = type;
+    }
+
+    function closeModal() {
+      overlay.style.display = 'none';
+      modalStatus.style.display = 'none';
+      modalForm.reset();
+    }
+
+    // Submit handler uses fetch to send JSON to Formspree
+    modalForm.addEventListener('submit', async function(e){
+      e.preventDefault();
+      modalStatus.style.display = 'none';
+
+      const name = modalName.value.trim();
+      const email = modalEmail.value.trim();
+      const message = modalMessage.value.trim();
+      const category = modalForm.dataset.category || 'message';
+      if(!name || !email || !message) {
+        modalStatus.style.display = 'block';
+        modalStatus.textContent = 'Please fill all fields.';
+        modalStatus.style.color = '#ffb4b4';
+        return;
+      }
+
+      // Prepare payload for Formspree
+      // Send a subject to help you filter emails
+      const subjectMap = {
+        note: 'Reading Note / Snippet',
+        review: 'Review / Code Tip',
+        message: 'Direct Message'
+      };
+      const payload = {
+        name,
+        _replyto: email,
+        message: `[${subjectMap[category]}] ${message}`,
+        _subject: `${subjectMap[category]} from Website`
+      };
+
+      // disable button while sending
+      modalSend.disabled = true;
+      modalSend.textContent = 'Sending...';
+      modalStatus.style.display = 'block';
+      modalStatus.style.color = '#94a3b8';
+      modalStatus.textContent = 'Sending — please wait...';
+
+      try {
+        const res = await fetch(FORM_URL, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          // success
+          modalStatus.style.color = '#a6f3c5';
+          modalStatus.textContent = 'Thanks, your message has been sent to Sanvi!';
+          // clear the input fields on the page if they were used
+          if (category === 'note') document.getElementById('noteInput').value = '';
+          if (category === 'review') document.getElementById('reviewInput').value = '';
+          // auto-close after 3s (user can click Close earlier)
+          setTimeout(closeModal, 3000);
+        } else {
+          // server returned error (Formspree returns 422 or 400 for validation)
+          const data = await res.json().catch(()=>({}));
+          modalStatus.style.color = '#ffb4b4';
+          modalStatus.textContent = data.error || 'Failed to send — try again later.';
+        }
+      } catch (err) {
+        modalStatus.style.color = '#ffb4b4';
+        modalStatus.textContent = 'Network error. If you are testing locally, run a local server or publish to GitHub Pages.';
+        console.error('Form send error:', err);
+      } finally {
+        modalSend.disabled = false;
+        modalSend.textContent = 'Send';
+      }
+    });
+
+    // close modal when clicking outside modal content
+    overlay.addEventListener('click', (ev) => {
+      if (ev.target === overlay) closeModal();
+    });
+  </script>
+</body>
+</html>
